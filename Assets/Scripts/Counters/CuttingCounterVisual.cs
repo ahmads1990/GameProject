@@ -10,7 +10,7 @@ public class CuttingCounterVisual : MonoBehaviour
     private Animator animator;
     private void Awake()
     {
-        animator= GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
     private void Start()
     {
