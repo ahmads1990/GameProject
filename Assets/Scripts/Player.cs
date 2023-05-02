@@ -27,11 +27,11 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 
     private void Awake()
     {
-        if(Instance != null)
+        if (Instance != null)
         {
             Debug.LogError("There is more than one player instance");
         }
-        Instance= this;
+        Instance = this;
     }
     private void Start()
     {
@@ -41,6 +41,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 
     private void GameInput_OnInteractAlternateAction(object sender, EventArgs e)
     {
+        if (!KitchenGameManager.Instance.IsGamePlaying()) return;
         if (selectedCounter != null)
         {
             selectedCounter.InteractAlternate(this);
@@ -49,6 +50,8 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 
     private void GameInput_OnInteractAction(object sender, System.EventArgs e)
     {
+        if (!KitchenGameManager.Instance.IsGamePlaying()) return;
+
         if (selectedCounter != null)
         {
             selectedCounter.Interact(this);
@@ -61,7 +64,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
         HandleInteractions();
     }
 
-    public bool IsWalking(){ return isWalking; }
+    public bool IsWalking() { return isWalking; }
 
     private void HandleInteractions()
     {
@@ -93,7 +96,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
             SetSelectedCounter(null);
         }
 
-        
+
     }
     private void HandleMovement()
     {
@@ -154,7 +157,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 
     private void SetSelectedCounter(BaseCounter selectedCounter)
     {
-        this.selectedCounter  = selectedCounter;
+        this.selectedCounter = selectedCounter;
 
         OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs
         {
@@ -166,7 +169,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     public void SetKitchenObject(KitchenObject kitchenObject)
     {
         this.kitchenObject = kitchenObject;
-        if(kitchenObject != null)
+        if (kitchenObject != null)
         {
             OnPickSomething?.Invoke(this, EventArgs.Empty);
         }

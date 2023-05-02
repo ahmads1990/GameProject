@@ -22,6 +22,7 @@ public class DeliveryManager : MonoBehaviour
     private float spawnRecipeTimer;
     private float spawnRecipeTimerMax = 4f;
     private int waitingRecipeMax = 4;
+    private int successfulRecipesAmount;
 
     private void Awake()
     {
@@ -62,12 +63,12 @@ public class DeliveryManager : MonoBehaviour
                     foreach (KitchenObjectSO plateKitchenObjectSO in plateKitchenObject.GetKitchenObjectSOList())
                     {
                         // go throw all ingredients in the plate
-                        if(plateKitchenObjectSO == recipeKitchenObjectSO)
+                        if (plateKitchenObjectSO == recipeKitchenObjectSO)
                         {
                             // ingredient match
                             ingredientFound = true;
                             break;
-                        } 
+                        }
                     }
                     if (!ingredientFound)
                     {
@@ -76,10 +77,11 @@ public class DeliveryManager : MonoBehaviour
                     }
                     if (plateContentsMatchesRecipe)
                     {
+                        successfulRecipesAmount++;
                         // player delivered the correct recipe 
                         waitingRecipeSOList.RemoveAt(i);
                         Debug.Log($"player delivered the correct recipe {waitingRecipeSO.recipeName}");
-                        
+
                         OnRecipeCompleted?.Invoke(this, EventArgs.Empty);
 
                         OnRecipeSuccess?.Invoke(this, EventArgs.Empty);
@@ -95,8 +97,12 @@ public class DeliveryManager : MonoBehaviour
         OnRecipeFailed?.Invoke(this, EventArgs.Empty);
     }
 
-   public List<RecipeSO> GetWaitingRecipeSOList()
+    public List<RecipeSO> GetWaitingRecipeSOList()
     {
         return waitingRecipeSOList;
+    }
+    public int GetSuccessfulRecipesAmount()
+    {
+        return successfulRecipesAmount;
     }
 }
