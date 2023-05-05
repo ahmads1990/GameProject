@@ -20,6 +20,9 @@ public class MainMenuUI : MonoBehaviour
         {
             Application.Quit();
         });
+
+        // Reset time for the game time to work after press main menu button
+        Time.timeScale = 1f; 
     }
 
     
