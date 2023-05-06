@@ -22,10 +22,9 @@ public class KitchenGameManager : MonoBehaviour
     }
 
     private State state;
-    private float waitingToStartTimer = 1f;
     private float countDownToStartTimer = 3f;
     private float gamePlayingTimer;
-    private float gamePlayingTimerMax = 10f;
+    [SerializeField]private float gamePlayingTimerMax = 50f;
 
     private bool isGamePaused = false;
     private void Awake()
@@ -36,6 +35,17 @@ public class KitchenGameManager : MonoBehaviour
     private void Start()
     {
         GameInput.Instance.OnPauseAction += GameInput_OnPauseAction;
+
+        GameInput.Instance.OnInteractAction += Instance_OnInteractAction;
+    }
+
+    private void Instance_OnInteractAction(object sender, EventArgs e)
+    {
+        if (state == State.WaitingToStart)
+        {
+            state = State.CountDownToStart;
+            OnStateChanged?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     private void GameInput_OnPauseAction(object sender, EventArgs e)
@@ -49,38 +59,33 @@ public class KitchenGameManager : MonoBehaviour
         {
 
             case State.WaitingToStart:
-            waitingToStartTimer -= Time.deltaTime;
-            if (waitingToStartTimer < 0f)
-            {
-                state = State.CountDownToStart;
-                OnStateChanged?.Invoke(this, EventArgs.Empty);
-            }
-            break;
+
+                break;
 
             case State.CountDownToStart:
-            countDownToStartTimer -= Time.deltaTime;
-            if (countDownToStartTimer < 0f)
-            {
-                state = State.GamePlaying;
-                gamePlayingTimer = gamePlayingTimerMax;
-                OnStateChanged?.Invoke(this, EventArgs.Empty);
-            }
-            break;
+                countDownToStartTimer -= Time.deltaTime;
+                if (countDownToStartTimer < 0f)
+                {
+                    state = State.GamePlaying;
+                    gamePlayingTimer = gamePlayingTimerMax;
+                    OnStateChanged?.Invoke(this, EventArgs.Empty);
+                }
+                break;
 
             case State.GamePlaying:
-            gamePlayingTimer -= Time.deltaTime;
-            if (gamePlayingTimer < 0f)
-            {
-                state = State.GameOver;
-                OnStateChanged?.Invoke(this, EventArgs.Empty);
-            }
-            break;
+                gamePlayingTimer -= Time.deltaTime;
+                if (gamePlayingTimer < 0f)
+                {
+                    state = State.GameOver;
+                    OnStateChanged?.Invoke(this, EventArgs.Empty);
+                }
+                break;
 
             case State.GameOver:
-            break;
+                break;
 
             default:
-            break;
+                break;
         }
         Debug.Log(state);
     }

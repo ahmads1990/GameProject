@@ -14,7 +14,7 @@ public class GameInput : MonoBehaviour
     public event EventHandler OnInteractAction;
     public event EventHandler OnInteractAlternateAction;
     public event EventHandler OnPauseAction;
-
+    public event EventHandler OnBindingRebind;
     public enum Binding
     {
         MoveUp,
@@ -24,6 +24,9 @@ public class GameInput : MonoBehaviour
         Interact,
         InteractAlt,
         Pause,
+        GamePad_Interact,
+        GamePad_InteractAlt,
+        GamePad_Pause,
     }
     private PlayerInputActions playerInputActions;
 
@@ -101,6 +104,15 @@ public class GameInput : MonoBehaviour
 
             case Binding.MoveRight:
                 return playerInputActions.Player.Move.bindings[4].ToDisplayString();
+
+            case Binding.GamePad_Interact:
+                return playerInputActions.Player.Interact.bindings[1].ToDisplayString();
+
+            case Binding.GamePad_InteractAlt:
+                return playerInputActions.Player.InteractAlternate.bindings[1].ToDisplayString();
+
+            case Binding.GamePad_Pause:
+                return playerInputActions.Player.Pause.bindings[1].ToDisplayString();
         }
     }
     public void RebindBinding(Binding binding, Action onActionReBound)
@@ -140,6 +152,19 @@ public class GameInput : MonoBehaviour
                 inputAction = playerInputActions.Player.Pause;
                 bindingIndex = 0;
                 break;
+
+            case Binding.GamePad_Interact:
+                inputAction = playerInputActions.Player.Interact;
+                bindingIndex = 1;
+                break;
+            case Binding.GamePad_InteractAlt:
+                inputAction = playerInputActions.Player.InteractAlternate;
+                bindingIndex = 1;
+                break;
+            case Binding.GamePad_Pause:
+                inputAction = playerInputActions.Player.Pause;
+                bindingIndex = 1;
+                break;
         }
         inputAction.PerformInteractiveRebinding(bindingIndex)
             .OnComplete(callback =>
@@ -152,6 +177,8 @@ public class GameInput : MonoBehaviour
 
                 PlayerPrefs.SetString(PLAYER_PREFS_BINDINGS, playerInputActions.SaveBindingOverridesAsJson());
                 PlayerPrefs.Save();
+
+                OnBindingRebind?.Invoke(this, EventArgs.Empty);
             })
             .Start();
     }
