@@ -1,9 +1,44 @@
 fileFormatVersion: 2
-guid: 4657802d20b3f7e4aa7f01495bd8dd79
+guid: 1420643f96fb44b4393a05e7ef40a5f5
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: aiEyes.002
+    second: {fileID: 2100000, guid: 91b9126570414424c9f9571eee914f11, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ailens.002
+    second: {fileID: 2100000, guid: 424ac30a4eb504443b37790cc6d7b958, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: body_m.002
+    second: {fileID: 2100000, guid: 17830b2b54c98ce42b802c90a9c6fa4b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bottom_m.002
+    second: {fileID: 2100000, guid: b1254a1a744ac8841ba9c2e4b688eaf1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: buttons_m.002
+    second: {fileID: 2100000, guid: f6f192228960b3945a2099ac27215686, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: hat_m.002
+    second: {fileID: 2100000, guid: 084d2edca5496c14e886ef9db7d482f1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: head_m.002
+    second: {fileID: 2100000, guid: 7fdc9a2c0d66034419c7c7143c5df2fe, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
