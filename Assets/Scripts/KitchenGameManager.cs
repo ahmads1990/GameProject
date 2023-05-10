@@ -106,7 +106,11 @@ public class KitchenGameManager : MonoBehaviour
     {
         return countDownToStartTimer;
     }
-    public float GetPlayingTimer()
+    public float GetRemainingPlayingTime()
+    {
+        return gamePlayingTimerMax - gamePlayingTimer;
+    }
+    public float GetPlayingTimerNorm()
     {
         return 1 - (gamePlayingTimer / gamePlayingTimerMax);
     }
