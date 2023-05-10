@@ -4815,6 +4815,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1369780297}
     m_Modifications:
+    - target: {fileID: 4198764685834625697, guid: 088c415282ffaac4ca68cee370583bde,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.35472697
+      objectReference: {fileID: 0}
+    - target: {fileID: 5578533662927361692, guid: 088c415282ffaac4ca68cee370583bde,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.35472697
+      objectReference: {fileID: 0}
     - target: {fileID: 6196794788104895596, guid: 088c415282ffaac4ca68cee370583bde,
         type: 3}
       propertyPath: m_RootOrder
@@ -4889,6 +4899,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6480708352715797905, guid: 088c415282ffaac4ca68cee370583bde,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.35472697
+      objectReference: {fileID: 0}
+    - target: {fileID: 6748240499850591675, guid: 088c415282ffaac4ca68cee370583bde,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.8414096
       objectReference: {fileID: 0}
     - target: {fileID: 6824255993825437398, guid: 088c415282ffaac4ca68cee370583bde,
         type: 3}
@@ -13162,7 +13182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e0c47c3ae2c2ef4a9d53a875224fe2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gamePlayingTimerMax: 100
 --- !u!4 &1711382317
 Transform:
   m_ObjectHideFlags: 0

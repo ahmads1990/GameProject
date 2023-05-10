@@ -11,10 +11,11 @@ public class GamePlayingClockUI : MonoBehaviour
     private void Update()
     {
         timerImage.fillAmount = KitchenGameManager.Instance.GetPlayingTimerNorm();
-        int seconds = (int)KitchenGameManager.Instance.GetRemainingPlayingTime();
-        int minutes = seconds / 60;
-        seconds = seconds % 60;
+        float timeRemaining = KitchenGameManager.Instance.GetRemainingPlayingTime();
 
-        timerText.SetText(minutes.ToString() + ":" + seconds.ToString());
+        int minutes = Mathf.FloorToInt(timeRemaining / 60);
+        int seconds = Mathf.FloorToInt(timeRemaining % 60);
+
+        timerText.SetText($"{minutes:0}:{seconds:00}");
     }
 }
