@@ -16,6 +16,9 @@ public class GamePlayingClockUI : MonoBehaviour
         int minutes = Mathf.FloorToInt(timeRemaining / 60);
         int seconds = Mathf.FloorToInt(timeRemaining % 60);
 
+        if(minutes <= 0 && seconds <= 0)
+            minutes = seconds = 0;
+
         timerText.SetText($"{minutes:0}:{seconds:00}");
     }
 }
