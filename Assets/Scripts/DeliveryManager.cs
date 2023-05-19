@@ -8,6 +8,10 @@ public class DeliveryManager : MonoBehaviour
     public event EventHandler OnRecipeSpawned;
     public event EventHandler OnRecipeCompleted;
 
+    // player variable
+    private int PlayerCurrentScore;
+    private int LevelTargetScore = 25;
+
     // for sounds
     public event EventHandler OnRecipeSuccess;
     public event EventHandler OnRecipeFailed;
@@ -48,6 +52,7 @@ public class DeliveryManager : MonoBehaviour
 
     public void DeliverRecipe(PlateKitchenObject plateKitchenObject)
     {
+        Debug.Log(plateKitchenObject.GetKitchenObjectSOList());
         for (int i = 0; i < waitingRecipeSOList.Count; i++)
         {
             RecipeSO waitingRecipeSO = waitingRecipeSOList[i];
@@ -78,6 +83,8 @@ public class DeliveryManager : MonoBehaviour
                     if (plateContentsMatchesRecipe)
                     {
                         successfulRecipesAmount++;
+                        PlayerCurrentScore += waitingRecipeSO.recipeValue;
+
                         // player delivered the correct recipe 
                         waitingRecipeSOList.RemoveAt(i);
                         Debug.Log($"player delivered the correct recipe {waitingRecipeSO.recipeName}");
@@ -105,4 +112,8 @@ public class DeliveryManager : MonoBehaviour
     {
         return successfulRecipesAmount;
     }
+
+    public int GetLevelTargetScore() { return LevelTargetScore; }
+    public int GetPlayerCurrentScore() { return PlayerCurrentScore; }
+    public bool PassedLevel() { return PlayerCurrentScore >= LevelTargetScore; }
 }

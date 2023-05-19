@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class DeliveryManagerSingleUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI recipeNameText;
+    [SerializeField] private TextMeshProUGUI recipeValueText;
     [SerializeField] private Transform iconContainer;
     [SerializeField] private Transform iconTemplate;
 
@@ -17,7 +18,7 @@ public class DeliveryManagerSingleUI : MonoBehaviour
     public void SetRecipeSO(RecipeSO recipeSO)
     {
         recipeNameText.text = recipeSO.recipeName;
-
+        recipeValueText.text = "Cost " + recipeSO.recipeValue + " $";
         foreach (Transform child  in iconContainer)
         {
             if (child == iconTemplate) continue;

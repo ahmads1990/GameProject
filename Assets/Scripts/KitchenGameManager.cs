@@ -9,7 +9,6 @@ public class KitchenGameManager : MonoBehaviour
 
     public event EventHandler OnStateChanged;
 
-
     public event EventHandler OnGamePaused;
 
     public event EventHandler OnGameUnPaused;

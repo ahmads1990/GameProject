@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class GameOverUI : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI recipesDeliverdText;
+    [SerializeField] private TextMeshProUGUI recipesDeliveredText;
+    [SerializeField] private TextMeshProUGUI LevelScoreText;
+    [SerializeField] private Color successColor;
+    [SerializeField] private Color failColor;
 
     private void Start()
     {
@@ -18,7 +21,19 @@ public class GameOverUI : MonoBehaviour
         if (KitchenGameManager.Instance.IsGameOver())
         {
             Show();
-            recipesDeliverdText.text = DeliveryManager.Instance.GetSuccessfulRecipesAmount().ToString();
+            recipesDeliveredText.text = DeliveryManager.Instance.GetSuccessfulRecipesAmount().ToString();
+
+            bool levelSuccess = DeliveryManager.Instance.PassedLevel();
+            if (levelSuccess)
+            {
+                LevelScoreText.text = "Congratulations!!";
+                LevelScoreText.color = successColor;
+            }
+            else
+            {
+                LevelScoreText.text = "Better Luck next time";
+                LevelScoreText.color = failColor;
+            }
         }
         else
             Hide();
