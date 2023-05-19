@@ -28,6 +28,7 @@ public class GameInput : MonoBehaviour
         GamePad_InteractAlt,
         GamePad_Pause,
     }
+    // for input manager
     private PlayerInputActions playerInputActions;
 
     private void Awake()
@@ -35,6 +36,8 @@ public class GameInput : MonoBehaviour
         Instance = this;
 
         playerInputActions = new PlayerInputActions();
+
+        // try to load pre-existing key map user created
         if (PlayerPrefs.HasKey(PLAYER_PREFS_BINDINGS))
         {
             playerInputActions.LoadBindingOverridesFromJson(PlayerPrefs.GetString(PLAYER_PREFS_BINDINGS));
@@ -53,19 +56,17 @@ public class GameInput : MonoBehaviour
 
         playerInputActions.Dispose();
     }
-    private void Pause_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-    {
-        OnPauseAction?.Invoke(this, EventArgs.Empty);
-    }
-
     private void InteractAlternate_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         OnInteractAlternateAction?.Invoke(this, EventArgs.Empty);
     }
-
     private void Interact_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         OnInteractAction?.Invoke(this, EventArgs.Empty);
+    }
+    private void Pause_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnPauseAction?.Invoke(this, EventArgs.Empty);
     }
 
     public Vector2 GetMovementVectorNormalized()

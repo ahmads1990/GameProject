@@ -15,18 +15,22 @@ public class KitchenObject : MonoBehaviour
 
     public void SetKitchenObjectParent(IKitchenObjectParent kitchenObjectParent)
     {
+        // if already has a parent clear it
         if (this.kitchenObjectParent != null)
         {
             this.kitchenObjectParent.ClearKitchenObject();
         }
+        // set this kitchen object parent to the new one
         this.kitchenObjectParent = kitchenObjectParent;
 
         if (kitchenObjectParent.HasKitchenObject())
         {
             Debug.LogError("Counter has already kitchen object");
         }
+        // set kitchen object for the parent to be this one
         kitchenObjectParent.SetKitchenObject(this);
 
+        // change this object location to be in parents hold point
         transform.parent = kitchenObjectParent.GetKitchenObjectFollowTransform();
         transform.localPosition = Vector3.zero;
     }

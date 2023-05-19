@@ -41,7 +41,10 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 
     private void GameInput_OnInteractAlternateAction(object sender, EventArgs e)
     {
+        // if game didn't start or already finished don't interact
         if (!KitchenGameManager.Instance.IsGamePlaying()) return;
+
+        // Else Interact with the counter
         if (selectedCounter != null)
         {
             selectedCounter.InteractAlternate(this);
@@ -50,8 +53,10 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 
     private void GameInput_OnInteractAction(object sender, System.EventArgs e)
     {
+        // if game didn't start or already finished don't interact
         if (!KitchenGameManager.Instance.IsGamePlaying()) return;
 
+        // Else Interact with the counter
         if (selectedCounter != null)
         {
             selectedCounter.Interact(this);
@@ -68,26 +73,32 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 
     private void HandleInteractions()
     {
+        // get input from input manager
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
 
         Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 
+        // if there is input by user change lastInteractDir
         if (moveDir != Vector3.zero)
             lastInteractDir = moveDir;
 
         float interactDistance = 2f;
+        // cast a ray from player position with interact direction, with max distance and layer mask = counter then store output
         if (Physics.Raycast(transform.position, lastInteractDir, out RaycastHit raycastHit, interactDistance, countersLayerMask))
         {
+            // if ray cast hit any counter
             if (raycastHit.transform.TryGetComponent(out BaseCounter baseCounter))
             {
-                // Has  ClearCounter
+                // Has Counter if its different than the currently selected counter change it
                 if (baseCounter != selectedCounter)
                 {
+                    // set current counter and invoke selected counter changed
                     SetSelectedCounter(baseCounter);
                 }
             }
             else
             {
+                // didn't hit a counter just set currently selected counter to null
                 SetSelectedCounter(null);
             }
         }
@@ -100,6 +111,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     }
     private void HandleMovement()
     {
+        // get input from input manager
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
 
         Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
@@ -108,6 +120,12 @@ public class Player : MonoBehaviour, IKitchenObjectParent
         float playerRadius = 0.7f;
         float playerHeight = 2f;
 
+        /* 
+            Cast a capsule around the player capsule dimen 
+            height from transform position (0,0,0) to head (up * height)
+            with capsule radius = player radius
+            with input direction and the distance that will be moved
+        */
         bool canMove = !Physics.CapsuleCast(
             transform.position,
             transform.position + Vector3.up * playerHeight,
@@ -116,16 +134,18 @@ public class Player : MonoBehaviour, IKitchenObjectParent
             moveDistance
             );
 
-
-
         if (!canMove)
         {
-            // Cannot move toward moveDir (hug the wall)
+            // Cannot move toward moveDir
+            // test if (hug the wall)
 
             // attempt move on x
             Vector3 moveDirX = new Vector3(moveDir.x, 0f, 0f).normalized;
+
+            // do capsule move again with updated direction and condition for controller playable
             canMove = (moveDir.x < -.5f || moveDir.x > +.5f) &&
                 !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirX, moveDistance);
+            
             if (canMove)
                 // can move only on the x
                 moveDir = moveDirX;
@@ -134,6 +154,8 @@ public class Player : MonoBehaviour, IKitchenObjectParent
                 // cannot move only on the x
                 // attempt move on z
                 Vector3 moveDirZ = new Vector3(0f, 0f, moveDir.z).normalized;
+
+                // do capsule move again with updated direction and condition for controller playable
                 canMove = (moveDir.z < -.5f || moveDir.z > +.5f) &&
                     !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirZ, moveDistance);
 
@@ -151,6 +173,8 @@ public class Player : MonoBehaviour, IKitchenObjectParent
             transform.position += moveDir * moveDistance;
 
         isWalking = moveDir != Vector3.zero;
+
+        // for rotation 
         float rotateSpeed = 10f;
         transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * rotateSpeed);
     }
